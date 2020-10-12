@@ -1,16 +1,18 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import Map from './Map';
 // import App from './App';
 // import Variabel from './Variabel';
-import StateProps from './StateProps';
+// import StateProps from './StateProps';
+// import Map from './Map';
+import Lifecycle from './Lifecycle';
 
 ReactDOM.render(
   <React.StrictMode>
     {/* <App /> */}
     {/* <Variabel /> */}
     {/* <StateProps /> */}
-    <Map />
+    {/* <Map /> */}
+    <Lifecycle />
   </React.StrictMode>,
   document.getElementById('root')
 );
