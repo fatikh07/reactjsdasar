@@ -25,17 +25,37 @@ export default class Crud extends Component {
   handleSubmit = (event) => {
     event.preventDefault();
 
-    this.setState({
-      makanans: [
-        ...this.state.makanans,
-        {
-          id: this.state.makanans.length + 1,
-          nama: this.state.nama,
-          deskripsi: this.state.deskripsi,
-          harga: this.state.harga,
-        },
-      ],
-    });
+    if (this.state.id == "") {
+      this.setState({
+        makanans: [
+          ...this.state.makanans,
+          {
+            id: this.state.makanans.length + 1,
+            nama: this.state.nama,
+            deskripsi: this.state.deskripsi,
+            harga: this.state.harga,
+          },
+        ],
+      });
+    } else {
+      const makananYangSelainDipilih = this.state.makanans
+        .filter((makanan) => makanan.id !== this.state.id)
+        .map((filterMakanan) => {
+          return filterMakanan;
+        });
+
+      this.setState({
+        makanans: [
+          ...makananYangSelainDipilih,
+          {
+            id: this.state.makanans.length + 1,
+            nama: this.state.nama,
+            deskripsi: this.state.deskripsi,
+            harga: this.state.harga,
+          },
+        ],
+      });
+    }
 
     this.setState({
       id: "",
@@ -45,13 +65,28 @@ export default class Crud extends Component {
     });
   };
 
+  editData = (id) => {
+    const makananYangDipilih = this.state.makanans
+      .filter((makanan) => makanan.id === id)
+      .map((filterMakanan) => {
+        return filterMakanan;
+      });
+
+    this.setState({
+      id: makananYangDipilih[0].id,
+      nama: makananYangDipilih[0].nama,
+      deskripsi: makananYangDipilih[0].deskripsi,
+      harga: makananYangDipilih[0].harga,
+    });
+  };
+
   render() {
     console.log(this.state.makanans);
     return (
       <div>
         <NavbarComponent />
         <div className="container mt-4">
-          <Tabel makanans={this.state.makanans} />
+          <Tabel makanans={this.state.makanans} editData={this.editData} />
           <Formulir
             {...this.state}
             handleChange={this.handleChange}
